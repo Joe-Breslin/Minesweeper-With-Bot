@@ -8,10 +8,11 @@ from typing import List, Optional, Tuple
 
 class GameState:
 
-    def __init__(self, user_width, user_height):
+    def __init__(self, user_width, user_height, bomb_pct):
         self.user_width = user_width
         self.user_height = user_height
-        self.board = board_generator.BoardGenerator.generate_hidden_board(user_width, user_height)
+        self.bomb_pct = bomb_pct
+        self.board = board_generator.BoardGenerator.generate_hidden_board(user_width, user_height, bomb_pct)
         self.visible: List[List[Optional[object]]] = [[None for _ in range(user_width)] for _ in range(user_height)]
         self.game_over = False
         self.won = False
@@ -21,7 +22,7 @@ class GameState:
         safe_cells = {(row, col)}
         safe_cells.update(self.neighbors(row,col))
         self.board = board_generator.BoardGenerator.generate_hidden_board(
-            self.user_width, self.user_height, safe_cells
+            self.user_width, self.user_height, self.bomb_pct, safe_cells
         )
 
     def in_bounds(self, row, col): 
@@ -98,7 +99,7 @@ class GameState:
         self.won = True
 
     def reset(self):
-        self.board = board_generator.BoardGenerator.generate_hidden_board(self.user_width, self.user_height)
+        self.board = board_generator.BoardGenerator.generate_hidden_board(self.user_width, self.user_height, self.bomb_pct)
         self.visible = [[None for _ in range(self.user_width)] for _ in range(self.user_height)]
         self.game_over = False
         self.won = False

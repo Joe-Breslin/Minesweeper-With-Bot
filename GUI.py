@@ -10,9 +10,9 @@ import Solver
 
 class MinesweeperGUI:
 
-    def __init__(self, root: tk.Tk, user_width, user_height, cell_size: int = 40):
+    def __init__(self, root: tk.Tk, user_width, user_height, bomb_pct, cell_size: int = 40): #TODO: bomb_pct needs to be wired in here
         self.root = root
-        self.state = Game_State.GameState(user_width, user_height)
+        self.state = Game_State.GameState(user_width, user_height, bomb_pct)
         self.solver = Solver.MinesweeperSolver(self.state)
         self.cell_size = cell_size
 

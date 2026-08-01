@@ -6,13 +6,13 @@ import random
 class BoardGenerator:
     
     @staticmethod
-    def generate_hidden_board(user_width, user_height, safe_cells=None):
+    def generate_hidden_board(user_width, user_height, bomb_pct, safe_cells=None):
         if safe_cells is None:
             safe_cells = set()
 
         # First create board with zeros
         board = np.zeros((user_height, user_width), dtype=int)
-        bombs_needed = int(user_width * user_height * 0.15)
+        bombs_needed = int(user_width * user_height * bomb_pct)
 
         for _ in range(bombs_needed):
             row = random.randint(0,user_height - 1)
